@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { redirect, useLocation, useNavigate } from 'react-router';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,7 +11,7 @@ import SchoolTwoToneIcon from '@mui/icons-material/SchoolTwoTone';
 const pages = [
     { name: 'Home', path: '/' },
     { name: 'Projects', path: '/test' },
-    { name: 'Other', path: '/test' },
+    { name: 'Weather App', path: 'https://weather.heather.network/', external: true },
     { name: 'Other', path: '/test' }
 ];
 
@@ -53,8 +53,15 @@ function Nav() {
             <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
                 {pages.map((page) => (
                 <Button
-                key={page.name}
-                onClick={() => navigate(page.path)}
+                    key={page.name}
+                    onClick={() => {
+                        if (page.external) {
+                            window.open(page.path, '_blank');
+                        }
+                        else {
+                            navigate(page.path);
+                        }
+                    }}
                 sx={{ my: 2, color: 'white' }}
                 >
                     {page.name}
